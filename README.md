@@ -9,16 +9,18 @@ These two datasets were originally scraped by the authors of a recommender syste
 The columns that we were interested in are as follows:
 
 'RAW_recipes.csv'
+
 | Column | Description |
-|:--- | ---:|
+| --- | --- |
 | 'name' | Recipe name |
 | 'id' | Recipe ID |
 | 'nutrition' | Nutrition information in the form [calories (#), total fat (PDV), sugar (PDV), sodium (PDV), protein (PDV), saturated fat (PDV), carbohydrates (PDV)]; PDV stands for “percentage of daily value” |
 | 'n_steps' | Number of steps in recipe |
 
 'RAW_interactions.csv'
+
 | Column | Description |
-|:--- | ---:|
+| --- | --- |
 |'recipe_id' | Recipe ID |
 |'rating' | Rating given |
 

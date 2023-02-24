@@ -14,6 +14,7 @@ The columns that we were interested in are as follows:
 | --- |:--- |
 | 'name' | Recipe name |
 | 'id' | Recipe ID |
+| 'ingredients' | List of all ingredients used in the recipe, sorted by proportions
 | 'nutrition' | Nutrition information in the form [calories (#), total fat (PDV), sugar (PDV), sodium (PDV), protein (PDV), saturated fat (PDV), carbohydrates (PDV)]; PDV stands for “percentage of daily value” |
 | 'n_steps' | Number of steps in recipe |
 
@@ -32,7 +33,7 @@ With these two datasets, the question we aim to answer is: *Are recipes for unhe
 
 # Cleaning and EDA
 
-After we dropped the columns we weren't using, we replaced the 'nutrition' column with columns for each of the nutritional contents listed. Then, using this nutritional info, we calculated a nutrition score for each recipe.
+After we dropped the columns we weren't using and converting the 'ingredient' and 'nutrition' columns from strings into lists of strings, we replaced the 'nutrition' column with columns for each of the nutritional contents listed. Then, using this nutritional info, we calculated a nutrition score for each recipe.
 
 ![alt text](https://www.fda.gov/files/nfl-howtounderstand-labeled.png)
 
@@ -42,19 +43,27 @@ To produce this nutrition score, we used the basis of measuring nutrition conten
 - 1 if 5% - 20%
 - 2 if 5% or less
 
-With that, we added a new column named 'score', which indicated the nutrition score of each recipe in the dataset
+With that, we added a new column named 'score', which indicated the nutrition score of each recipe in the dataset. 
 
-Our cleaned dataset looks like this
+Some values for the nutritional content columns were far too extreme to be fit for human consumption 
+Our cleaned dataset looks like this:
 
-| name                                 |     id |   rating |   avg_rating |   n_steps |   Total Fat |   Saturated Fat |   Sugar |   Sodium |   Score |
-|:-------------------------------------|-------:|---------:|-------------:|----------:|------------:|----------------:|--------:|---------:|--------:|
-| 1 brownies in the world    best ever | 333281 |        4 |            4 |        10 |          10 |              19 |      50 |        3 |       4 |
-| 1 in canada chocolate chip cookies   | 453467 |        5 |            5 |        12 |          46 |              51 |     211 |       22 |       0 |
-| 412 broccoli casserole               | 306168 |        5 |            5 |         6 |          20 |              36 |       6 |       32 |       1 |
-| 412 broccoli casserole               | 306168 |        5 |            5 |         6 |          20 |              36 |       6 |       32 |       1 |
-| 412 broccoli casserole               | 306168 |        5 |            5 |         6 |          20 |              36 |       6 |       32 |       1 |
+| name                                 |     id | ingredients                                                                                                                                                                    |   rating |   avg_rating |   n_steps |   Total Fat |   Saturated Fat |   Sugar |   Sodium |   Score |
+|:-------------------------------------|-------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------:|-------------:|----------:|------------:|----------------:|--------:|---------:|--------:|
+| 1 brownies in the world    best ever | 333281 | ['bittersweet chocolate', 'unsalted butter', 'eggs', 'granulated sugar', 'unsweetened cocoa powder', 'vanilla extract', 'brewed espresso', 'kosher salt', 'all-purpose flour'] |        4 |            4 |        10 |          10 |              19 |      50 |        3 |       4 |
+| 1 in canada chocolate chip cookies   | 453467 | ['white sugar', 'brown sugar', 'salt', 'margarine', 'eggs', 'vanilla', 'water', 'all-purpose flour', 'whole wheat flour', 'baking soda', 'chocolate chips']                    |        5 |            5 |        12 |          46 |              51 |     211 |       22 |       0 |
+| 412 broccoli casserole               | 306168 | ['frozen broccoli cuts', 'cream of chicken soup', 'sharp cheddar cheese', 'garlic powder', 'ground black pepper', 'salt', 'milk', 'soy sauce', 'french-fried onions']          |        5 |            5 |         6 |          20 |              36 |       6 |       32 |       1 |
+| 412 broccoli casserole               | 306168 | ['frozen broccoli cuts', 'cream of chicken soup', 'sharp cheddar cheese', 'garlic powder', 'ground black pepper', 'salt', 'milk', 'soy sauce', 'french-fried onions']          |        5 |            5 |         6 |          20 |              36 |       6 |       32 |       1 |
+| 412 broccoli casserole               | 306168 | ['frozen broccoli cuts', 'cream of chicken soup', 'sharp cheddar cheese', 'garlic powder', 'ground black pepper', 'salt', 'milk', 'soy sauce', 'french-fried onions']          |        5 |            5 |         6 |          20 |              36 |       6 |       32 |       1 |
 
+We also generated another dataframe that only takes recipes with a 'score' of either 0-2 or 6-8, which had an additional boolean column labelled 'Healthy', with scores of 0-2 being False and 6-8 being True.
 
+name                               |     id | ingredients                                                                                                                                                           |   rating |   avg_rating |   n_steps |   Total Fat |   Saturated Fat |   Sugar |   Sodium |   Score | Healthy   |
+|:-----------------------------------|-------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------:|-------------:|----------:|------------:|----------------:|--------:|---------:|--------:|:----------|
+| 1 in canada chocolate chip cookies | 453467 | ['white sugar', 'brown sugar', 'salt', 'margarine', 'eggs', 'vanilla', 'water', 'all-purpose flour', 'whole wheat flour', 'baking soda', 'chocolate chips']           |        5 |            5 |        12 |          46 |              51 |     211 |       22 |       0 | False     |
+| 412 broccoli casserole             | 306168 | ['frozen broccoli cuts', 'cream of chicken soup', 'sharp cheddar cheese', 'garlic powder', 'ground black pepper', 'salt', 'milk', 'soy sauce', 'french-fried onions'] |        5 |            5 |         6 |          20 |              36 |       6 |       32 |       1 | False     |
+| 412 broccoli casserole             | 306168 | ['frozen broccoli cuts', 'cream of chicken soup', 'sharp cheddar cheese', 'garlic powder', 'ground black pepper', 'salt', 'milk', 'soy sauce', 'french-fried onions'] |        5 |            5 |         6 |          20 |              36 |       6 |       32 |       1 | False     |
+| 412 broccoli casserole             | 306168 | ['frozen broccoli cuts', 'cream of chicken soup', 'sharp cheddar cheese', 'garlic powder', 'ground black pepper', 'salt', 'milk', 'soy sauce', 'french-fried onions'] |        5 |            5 |         6 |          20 |              36 |       6 |       32 |       1 | False     |
 
 
 # Assessment of Missingness

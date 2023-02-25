@@ -33,6 +33,7 @@ With these two datasets, the question we aim to answer is: *Are recipes for unhe
 
 # Cleaning and EDA
 
+## Data Cleaning and Organizing
 After we dropped the columns we weren't using and converting the 'ingredient' and 'nutrition' columns from strings into lists of strings, we replaced the 'nutrition' column with columns for each of the nutritional contents listed. Then, using this nutritional info, we calculated a nutrition score for each recipe.
 
 ![alt text](https://www.fda.gov/files/nfl-howtounderstand-labeled.png)
@@ -43,7 +44,7 @@ To produce this nutrition score, we used the basis of measuring nutrition conten
 - 1 if 5% - 20%
 - 2 if 5% or less
 
-With that, we added a new column named 'score', which indicated the nutrition score of each recipe in the dataset. 
+With that, we added a new column named 'score', which indicated the nutrition score (between 0 and 8) of each recipe in the dataset. 
 
 Some values for the nutritional content columns were far too extreme to be fit for human consumption 
 Our cleaned dataset looks like this:
@@ -58,6 +59,8 @@ Our cleaned dataset looks like this:
 
 We also generated another dataframe that only takes recipes with a 'score' of either 0-2 or 6-8, which had an additional boolean column labelled 'Healthy', with scores of 0-2 being False and 6-8 being True.
 
+This dataframe is used later on for our Hypothesis Testing
+
 name                               |     id | ingredients                                                                                                                                                           |   rating |   avg_rating |   n_steps |   Total Fat |   Saturated Fat |   Sugar |   Sodium |   Score | Healthy   |
 |:-----------------------------------|-------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------:|-------------:|----------:|------------:|----------------:|--------:|---------:|--------:|:----------|
 | 1 in canada chocolate chip cookies | 453467 | ['white sugar', 'brown sugar', 'salt', 'margarine', 'eggs', 'vanilla', 'water', 'all-purpose flour', 'whole wheat flour', 'baking soda', 'chocolate chips']           |        5 |            5 |        12 |          46 |              51 |     211 |       22 |       0 | False     |
@@ -65,6 +68,12 @@ name                               |     id | ingredients                       
 | 412 broccoli casserole             | 306168 | ['frozen broccoli cuts', 'cream of chicken soup', 'sharp cheddar cheese', 'garlic powder', 'ground black pepper', 'salt', 'milk', 'soy sauce', 'french-fried onions'] |        5 |            5 |         6 |          20 |              36 |       6 |       32 |       1 | False     |
 | 412 broccoli casserole             | 306168 | ['frozen broccoli cuts', 'cream of chicken soup', 'sharp cheddar cheese', 'garlic powder', 'ground black pepper', 'salt', 'milk', 'soy sauce', 'french-fried onions'] |        5 |            5 |         6 |          20 |              36 |       6 |       32 |       1 | False     |
 
+## Univariate Analysis
+
+<iframe src="assets/univariate.html" width=800 height=600 frameBorder=0></iframe>
+
+
+When we plot the distribution of scores across all our recipes, it becomes apparent that the scores are quite skewed, with most recipes having rather low nutrition scores. The median of the recipe's score is around 2-3 and the distribution being positively skewed on the right side, with a notable, slight hump at score 6.
 
 # Assessment of Missingness
 

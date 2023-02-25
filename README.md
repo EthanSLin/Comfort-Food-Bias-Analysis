@@ -57,9 +57,9 @@ Our cleaned dataset looks like this:
 | 412 broccoli casserole               | 306168 | ['frozen broccoli cuts', 'cream of chicken soup', 'sharp cheddar cheese', 'garlic powder', 'ground black pepper', 'salt', 'milk', 'soy sauce', 'french-fried onions']          |        5 |            5 |         6 |          20 |              36 |       6 |       32 |       1 |
 | 412 broccoli casserole               | 306168 | ['frozen broccoli cuts', 'cream of chicken soup', 'sharp cheddar cheese', 'garlic powder', 'ground black pepper', 'salt', 'milk', 'soy sauce', 'french-fried onions']          |        5 |            5 |         6 |          20 |              36 |       6 |       32 |       1 |
 
-We also generated another dataframe that only takes recipes with a 'score' of either 0-2 or 6-8, which had an additional boolean column labelled 'Healthy', with scores of 0-2 being False and 6-8 being True.
+We also generated an alternate dataframe that only takes recipes with a 'score' of either 0-2 or 6-8, which had an additional boolean column labelled 'Healthy', with scores of 0-2 being False and 6-8 being True.
 
-This dataframe is used later on for our Hypothesis Testing
+This dataframe is used when we want to focus on the two extremes of the nutrition scores.
 
 name                               |     id | ingredients                                                                                                                                                           |   rating |   avg_rating |   n_steps |   Total Fat |   Saturated Fat |   Sugar |   Sodium |   Score | Healthy   |
 |:-----------------------------------|-------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------:|-------------:|----------:|------------:|----------------:|--------:|---------:|--------:|:----------|
@@ -72,8 +72,25 @@ name                               |     id | ingredients                       
 
 <iframe src="assets/univariate.html" width=800 height=600 frameBorder=0></iframe>
 
-
 When we plot the distribution of scores across all our recipes, it becomes apparent that the scores are quite skewed, with most recipes having rather low nutrition scores. The median of the recipe's score is around 2-3 and the distribution being positively skewed on the right side, with a notable, slight hump at score 6.
+
+<iframe src="assets/Red_Dist_of_Avg_Rating.html" width=800 height=600 frameBorder=0></iframe>
+
+We also noticed that there is an extreme negative skew when in terms of ratings. The distribution of ratings is so heavily skewed that ratings less than 3.6 stars are considered outliers, which indicates just how concentrated ratings are.
+
+## Bivariate Analysis
+
+<iframe src="assets/Score_Distribution_by_Average_Rating.html" width=800 height=600 frameBorder=0></iframe>
+
+Due to the extremely dense concentration of high 'avg_rating' values, we note that there is not much difference between the distributions of the
+
+## Interesting Aggregates
+
+| Healthy   |   avg_rating |
+|:----------|-------------:|
+| False     |      4.6768  |
+| True      |      4.68772 |
+
 
 # Assessment of Missingness
 

@@ -72,7 +72,7 @@ name                               |     id | ingredients                       
 
 <iframe src="assets/univariate.html" width=800 height=600 frameBorder=0></iframe>
 
-When we plot the distribution of scores across all our recipes, it becomes apparent that the scores are quite skewed, with most recipes having rather low nutrition scores. The median of the recipe`s score is around 2-3 and the distribution being positively skewed on the right side, with a notable, slight hump at score 6.
+When we plot the distribution of scores across all our recipes, it becomes apparent that the scores are quite skewed, with most recipes having rather low nutrition scores. The median of the recipe's score is around 2-3 and the distribution being positively skewed on the right side, with a notable, slight hump at score 6.
 
 <iframe src="assets/Red_Dist_of_Avg_Rating.html" width=800 height=600 frameBorder=0></iframe>
 
